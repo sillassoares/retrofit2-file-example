@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnPost;
     File environment;
-    String PATH_FILE_NAME = "/Download/test.jpg";
+    String PATH_FILE_NAME = "/Download/Teste/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +48,18 @@ public class MainActivity extends AppCompatActivity {
 
         File photo = new File(environment.getAbsolutePath() + PATH_FILE_NAME);
 
+        Log.e("Here", String.valueOf(photo.listFiles()));
+
+        File[] folder = photo.listFiles();
+
+        for (int i = 0; i < folder.length; i++) {
+            File picture = folder[i];
+
+
         MediaType MEDIA_TYPE_IMAGE = MediaType.parse("image/*");
         MediaType MEDIA_TYPE_TEXT = MediaType.parse("text/plain");
 
-        RequestBody postPhoto = RequestBody.create(MEDIA_TYPE_IMAGE, photo);
+        RequestBody postPhoto = RequestBody.create(MEDIA_TYPE_IMAGE, picture);
         RequestBody postUser = RequestBody.create(MEDIA_TYPE_TEXT, "179");
 
         Call<JsonElement> callBack = AppApi.getInstance().postPicture(postPhoto,postUser);
@@ -68,10 +76,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+            Log.e("Here", picture.getName());
+
         // Workaround para enviar com o nome da imagem (Retrofit não tem esse suporte, pelo que li no github)
         Map<String, RequestBody> map = new HashMap<>();
         map.put("user", postUser);
-        map.put("photo\"; filename=\""+photo.getName()+" \" ", postPhoto);
+        map.put("photo\"; filename=\""+picture.getName()+" \" ", postPhoto);
 
         Call<JsonElement> callWorkaround = AppApi.getInstance().postWorkaroundPicture(map);
         callWorkaround.enqueue(new Callback<JsonElement>() {
@@ -87,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        }
 
     }
 }
