@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnPost;
     File environment;
-    String PATH_FILE_NAME = "/Download/test.jpg";
+    String PATH_FILE_NAME = "/DCIM/Camera/IMG_20151125_213502641.jpg";
+    // /storage/emulated/0/DCIM/Camera/IMG_20151125_213502641.jpg
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
